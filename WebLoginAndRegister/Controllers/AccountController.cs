@@ -59,6 +59,36 @@ namespace WebLoginAndRegister.Controllers
             });
         }
 
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody]RegisterViewModel model)
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    var errrors = CustomValidator.GetErrorsByModel(ModelState);
+            //    return BadRequest(errrors);
+            //}
+
+            var user = new DbUser
+            {
+                UserName = model.Email,
+                Email = model.Email
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+            await _signInManager.SignInAsync(user, isPersistent: false);
+
+            return Ok(
+            new
+            {
+                token = CreateTokenJwt(user)
+            });
+        }
+
+
         private string CreateTokenJwt(DbUser user)
         {
             var roles = _userManager.GetRolesAsync(user).Result;

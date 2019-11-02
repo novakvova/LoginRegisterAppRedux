@@ -4,11 +4,13 @@ import Layout from './components/Layout';
 import Home from './components/Home';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
+import RegisterPage from './components/auth/Register';
 
 export default () => (
   <Layout>
     <Route exact path='/' component={Home} />
     <Route path='/counter' component={Counter} />
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
+    <Route path='/register' component={RegisterPage} />
   </Layout>
 );

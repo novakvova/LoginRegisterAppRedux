@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {registerUser} from './reducer';
+import EclipseWidget from '../../Eclipse';
 
 const propTypes = {
     register: PropTypes.func.isRequired,
@@ -51,7 +52,7 @@ class RegisterPage extends Component {
     render() { 
         console.log('----This props REGISTER PAGE-----', this.props);
         console.log('----This state REGISTER PAGE-----', this.state);
-        const {email, password, confirmPassword, errors} = this.state;
+        const {email, loading, password, confirmPassword, errors} = this.state;
         return ( 
             <>
                 <h2>Реєстрація</h2>
@@ -73,6 +74,8 @@ class RegisterPage extends Component {
 
                     </div>
                 </form>
+
+                {loading && <EclipseWidget/>}
             </>
          );
     }

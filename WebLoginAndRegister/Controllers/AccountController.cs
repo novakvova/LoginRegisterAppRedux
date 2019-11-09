@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using WebLoginAndRegister.Helpers;
 
 namespace WebLoginAndRegister.Controllers
 {
@@ -62,11 +63,11 @@ namespace WebLoginAndRegister.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]RegisterViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    var errrors = CustomValidator.GetErrorsByModel(ModelState);
-            //    return BadRequest(errrors);
-            //}
+            if (!ModelState.IsValid)
+            {
+                var errors = CustomValidator.GetErrorsByModel(ModelState);
+                return BadRequest(errors);
+            }
 
             var user = new DbUser
             {

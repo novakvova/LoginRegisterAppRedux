@@ -34,20 +34,20 @@ class RegisterPage extends Component {
 
     setStateByErrors = (name, value) => {
         if (!!this.state.errors[name]) {
-          let errors = Object.assign({}, this.state.errors);
-          delete errors[name];
-          this.setState({
-            [name]: value,
-            errors
-          });
+            let errors = Object.assign({}, this.state.errors);
+            delete errors[name];
+            this.setState({
+                [name]: value,
+                errors
+            });
         } else {
-          this.setState({ [name]: value });
+            this.setState({ [name]: value });
         }
-      };
+    };
 
     handleChange = e => {
         this.setStateByErrors(e.target.name, e.target.value);
-      };
+    };
 
     render() { 
         console.log('----This props REGISTER PAGE-----', this.props);

@@ -26,7 +26,11 @@ export const registerReducer = (state = initialState, action) => {
         }
         case REGISTER_FAILED: {
             console.log('-----Filed register User--------');
-            newState = {...state, loading: false};
+            newState = {
+                ...state, 
+                loading: false, 
+                errors: action.servErrors
+            };
             break;
         }
         default: {
@@ -45,8 +49,8 @@ export const registerUser = (model) => {
                 console.log('Server message', response.data);
                 dispatch({type: REGISTER_SUCCESS});
             }, err => {
-                dispatch({type: REGISTER_FAILED});
-                console.log('Server problen in controler message', err.response);
+                dispatch({type: REGISTER_FAILED, servErrors: err.response.data});
+                console.log('Server problen in controler message', err.response.data);
             })
             .catch(err=> {
                 console.log('Global Server problen in controler message', err);

@@ -21,9 +21,10 @@ class RegisterPage extends Component {
      }
 
      UNSAFE_componentWillReceiveProps = (nextProps) => {
-         console.log('Change props ');
+        console.log('Change props ');
         this.setState({
-            loading: nextProps.loading
+            loading: nextProps.loading,
+            errors: nextProps.errors
         });
     }
 
@@ -86,7 +87,8 @@ class RegisterPage extends Component {
 
 const mapState = (state) => {
     return {
-        loading: state.register.loading
+        loading: state.register.loading,
+        errors: state.register.errors,
     }
 }
 

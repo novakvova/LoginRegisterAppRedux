@@ -15,7 +15,9 @@ class RegisterPage extends Component {
         password: '',
         confirmPassword: '',
         loading: this.props.loading,
-        errors: {}
+        errors: {
+            //email: 'Invalid'
+        }
      }
 
      UNSAFE_componentWillReceiveProps = (nextProps) => {
@@ -28,7 +30,8 @@ class RegisterPage extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log('--register submit--');
-        this.props.register({email:''});
+        const {email} = this.state;
+        this.props.register({email: email});
 
     }
 

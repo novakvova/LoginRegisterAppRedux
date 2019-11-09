@@ -14,7 +14,7 @@ class RegisterPage extends Component {
     state = { 
         email: '',
         password: '',
-        confirmPassword: '',
+        passwordConfirm: '',
         loading: this.props.loading,
         errors: {
             //email: 'Invalid'
@@ -32,9 +32,12 @@ class RegisterPage extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log('--register submit--');
-        const {email} = this.state;
-        this.props.register({email: email});
-
+        const {email, password, passwordConfirm} = this.state;
+        this.props.register({
+            email: email, 
+            password: password, 
+            passwordConfirm: passwordConfirm}
+        );
     }
 
     setStateByErrors = (name, value) => {
@@ -57,7 +60,7 @@ class RegisterPage extends Component {
     render() { 
         console.log('----This props REGISTER PAGE-----', this.props);
         console.log('----This state REGISTER PAGE-----', this.state);
-        const {email, loading, password, confirmPassword, errors} = this.state;
+        const {email, loading, password, passwordConfirm, errors} = this.state;
         return ( 
             <>
                 <h2>Реєстрація</h2>
@@ -89,15 +92,15 @@ class RegisterPage extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="confirmPassword">Пароль</label>
+                        <label htmlFor="passwordConfirm">Пароль</label>
                         <input type="password"
-                            className={classnames('form-control', { 'is-invalid': !!errors.confirmPassword })}
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            value={confirmPassword}
+                            className={classnames('form-control', { 'is-invalid': !!errors.passwordConfirm })}
+                            id="passwordConfirm"
+                            name="passwordConfirm"
+                            value={passwordConfirm}
                             onChange={this.handleChange} />
-                        {!!errors.confirmPassword &&
-                            <div className="help-block">{errors.confirmPassword}</div>
+                        {!!errors.passwordConfirm &&
+                            <div className="help-block">{errors.passwordConfirm}</div>
                         }
                     </div>
 

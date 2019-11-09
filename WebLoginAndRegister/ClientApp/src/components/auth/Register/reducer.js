@@ -1,4 +1,5 @@
 import registerService from './registerService';
+import { push } from 'connected-react-router';
 
 export const REGISTER_STARTED = "user/REGISTER_STARTED";
 export const REGISTER_SUCCESS = "user/REGISTER_SUCCESS";
@@ -48,6 +49,7 @@ export const registerUser = (model) => {
             {
                 console.log('Server message', response.data);
                 dispatch({type: REGISTER_SUCCESS});
+                dispatch(push('/'));
             }, err => {
                 dispatch({type: REGISTER_FAILED, servErrors: err.response.data});
                 console.log('Server problen in controler message', err.response.data);

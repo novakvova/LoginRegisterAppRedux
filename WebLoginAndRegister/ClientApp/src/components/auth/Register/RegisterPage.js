@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from "classnames";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {registerUser} from './reducer';
@@ -61,15 +62,42 @@ class RegisterPage extends Component {
             <>
                 <h2>Реєстрація</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (!!errors.email ? ' has-error' : '')}>
-                        <label htmlFor="username">Пошта</label>
+                    <div className="form-group">
+                        <label htmlFor="email">Пошта</label>
                         <input type="text"
-                            className="form-control"
+                            className={classnames('form-control', { 'is-invalid': !!errors.email })}
+                            id="email"
                             name="email"
                             value={email}
                             onChange={this.handleChange} />
                         {!!errors.email &&
                             <div className="help-block">{errors.email}</div>
+                        }
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="password">Пароль</label>
+                        <input type="password"
+                            className={classnames('form-control', { 'is-invalid': !!errors.password })}
+                            id="password"
+                            name="password"
+                            value={password}
+                            onChange={this.handleChange} />
+                        {!!errors.password &&
+                            <div className="help-block">{errors.password}</div>
+                        }
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="confirmPassword">Пароль</label>
+                        <input type="password"
+                            className={classnames('form-control', { 'is-invalid': !!errors.confirmPassword })}
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value={confirmPassword}
+                            onChange={this.handleChange} />
+                        {!!errors.confirmPassword &&
+                            <div className="help-block">{errors.confirmPassword}</div>
                         }
                     </div>
 

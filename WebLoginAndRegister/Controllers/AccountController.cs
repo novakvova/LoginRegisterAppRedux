@@ -137,5 +137,27 @@ namespace WebLoginAndRegister.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
+        [HttpPost("confirmemail/{userid}")]
+        //[AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userid, [FromBody]ConfirmEmailViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errrors = CustomValidator.GetErrorsByModel(ModelState);
+                return BadRequest(errrors);
+            }
+            var user = await _userManager.FindByIdAsync(userid);
+            if (user == null)
+            {
+                return BadRequest(new { invalid = "User is not found" });
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, model.Code);
+            if (!result.Succeeded)
+            {
+                var errrors = CustomValidator.GetErrorsByIdentityResult(result);
+                return BadRequest(errrors);
+            }
+            return Ok();
+        }
     }
 }

@@ -16,17 +16,17 @@ export const confirmEmailReducer = (state = initialState, action) => {
     let newState = state;
     switch (action.type) {
         case CONFIRMEMAIL_STARTED: {
-            console.log('-----Begin register User--------');
+            console.log('-----Begin confirmEmail User--------');
             newState = {...state, loading: true};
             break;
         }
         case CONFIRMEMAIL_SUCCESS: {
-            console.log('-----Success register User--------');
+            console.log('-----Success confirmEmail User--------');
             newState = {...state, loading: false};
             break;
         }
         case CONFIRMEMAIL_FAILED: {
-            console.log('-----Filed register User--------');
+            console.log('-----Filed confirmEmail User--------');
             newState = {
                 ...state, 
                 loading: false, 

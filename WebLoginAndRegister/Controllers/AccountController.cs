@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using WebLoginAndRegister.Helpers;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration;
+using System.Net;
 
 namespace WebLoginAndRegister.Controllers
 {
@@ -24,16 +26,19 @@ namespace WebLoginAndRegister.Controllers
         private readonly UserManager<DbUser> _userManager;
         private readonly SignInManager<DbUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IConfiguration _configuration;
 
         public AccountController(EFDbContext context,
          UserManager<DbUser> userManager,
          SignInManager<DbUser> signInManager,
+         IConfiguration configuration,
          IEmailSender emailSender)
         {
             _userManager = userManager;
             _context = context;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _configuration = configuration;
         }
 
         [HttpPost("login")]
@@ -84,13 +89,27 @@ namespace WebLoginAndRegister.Controllers
             {
                 return BadRequest(result.Errors);
             }
-            await _signInManager.SignInAsync(user, isPersistent: false);
+            string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            return Ok(
-            new
-            {
-                token = CreateTokenJwt(user)
-            });
+            var frontEndURL = _configuration.GetValue<string>("FrontEndURL");
+
+            var callbackUrl =
+                $"{frontEndURL}/confirmemail?userId={user.Id}&" +
+                $"code={WebUtility.UrlEncode(code)}";
+
+            await _emailSender.SendEmailAsync(model.Email, "Confirm Email",
+               $"Please confirm your email by clicking here: " +
+               $"<a href='{callbackUrl}'>link</a>");
+
+            return Ok("SEMEN");
+
+            //await _signInManager.SignInAsync(user, isPersistent: false);
+
+            //return Ok(
+            //new
+            //{
+            //    token = CreateTokenJwt(user)
+            //});
         }
 
 

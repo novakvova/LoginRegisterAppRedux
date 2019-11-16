@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using WebLoginAndRegister.Entities;
+using WebLoginAndRegister.Services;
 
 namespace WebLoginAndRegister
 {
@@ -32,6 +34,8 @@ namespace WebLoginAndRegister
             services.AddIdentity<DbUser, DbRole>(options => options.Stores.MaxLengthForKeys = 128)
                 .AddEntityFrameworkStores<EFDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("11-sdfasdf-22233222222"));
 

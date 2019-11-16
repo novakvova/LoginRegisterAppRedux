@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using WebLoginAndRegister.Helpers;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace WebLoginAndRegister.Controllers
 {
@@ -22,14 +23,17 @@ namespace WebLoginAndRegister.Controllers
         private readonly EFDbContext _context;
         private readonly UserManager<DbUser> _userManager;
         private readonly SignInManager<DbUser> _signInManager;
+        private readonly IEmailSender _emailSender;
 
         public AccountController(EFDbContext context,
          UserManager<DbUser> userManager,
-         SignInManager<DbUser> signInManager)
+         SignInManager<DbUser> signInManager,
+         IEmailSender emailSender)
         {
             _userManager = userManager;
             _context = context;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         [HttpPost("login")]

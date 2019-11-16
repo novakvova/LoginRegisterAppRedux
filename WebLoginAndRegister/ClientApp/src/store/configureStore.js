@@ -5,6 +5,7 @@ import * as Counter from './Counter';
 import * as WeatherForecasts from './WeatherForecasts';
 import { createBrowserHistory } from 'history';
 import {registerReducer} from '../components/auth/Register/reducer';
+import {confirmEmailReducer} from '../components/auth/ConfirmEmail/reducer';
 
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
@@ -14,7 +15,8 @@ export default function configureStore(history, initialState) {
   const reducers = {
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
-    register: registerReducer
+    register: registerReducer,
+    confirmEmail: confirmEmailReducer
   };
 
   const middleware = [
